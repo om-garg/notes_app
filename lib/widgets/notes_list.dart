@@ -7,14 +7,16 @@ class NotesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<NotesData>(
-      builder: (context, data, builder) {
+      builder: (context, data, child) {
         return ListView.builder(
             itemCount: data.notesCount,
             itemBuilder: (context, index) {
               return NoteCard(
                 title: data.note[index].title,
                 description: data.note[index].desc,
-                onPress: () {},
+                onPress: () {
+                  data.deleteNotes(index);
+                },
               );
             });
       },
