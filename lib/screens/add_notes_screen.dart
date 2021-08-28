@@ -15,11 +15,20 @@ class AddNoteScreen extends StatelessWidget {
           'Flutter Notes',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: 23,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
