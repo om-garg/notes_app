@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/add_notes_screen.dart';
+import 'package:notes_app/widgets/notes_list.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,6 +38,7 @@ class HomeScreen extends StatelessWidget {
           size: 30,
         ),
       ),
+      body: NotesList(),
     );
   }
 }
