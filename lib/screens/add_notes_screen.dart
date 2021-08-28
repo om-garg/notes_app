@@ -5,9 +5,8 @@ import 'package:provider/provider.dart';
 class AddNoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextEditingController title = new TextEditingController();
-    // String title = '';
-    String desc = '';
+    String titleText = '';
+    String descText = '';
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -15,7 +14,6 @@ class AddNoteScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: title,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 23,
@@ -33,9 +31,9 @@ class AddNoteScreen extends StatelessWidget {
                 ),
                   border: InputBorder.none,
               ),
-              // onChanged: (noteTitle) {
-              //   title = noteTitle;
-              // },
+              onChanged: (value) {
+                titleText = value;
+              },
             ),
             SizedBox(
               height: 10,
@@ -81,7 +79,7 @@ class AddNoteScreen extends StatelessWidget {
                   ),
                 ),
                 onChanged: (value) {
-                  desc = value;
+                  descText = value;
                 },
               ),
             ),
@@ -92,9 +90,11 @@ class AddNoteScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
               ),
-              onPressed: (){
+              onPressed: () {
+                print(titleText);
+                print(descText);
                 Provider.of<NotesData>(context, listen: false)
-                    .addNotes(title.text, desc);
+                    .addNotes(titleText, descText);
                 Navigator.pop(context);
               },
               child: Container(
