@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AddNoteScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +9,7 @@ class AddNoteScreen extends StatelessWidget {
         children: [
           TextField(),
           Expanded(
-              child: TextField(),
+            child: TextField(),
           ),
           ElevatedButton(
             onPressed: () {

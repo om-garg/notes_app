@@ -3,7 +3,6 @@ import 'package:notes_app/screens/add_notes_screen.dart';
 import 'package:notes_app/widgets/notes_list.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +26,11 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddNoteScreen(),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddNoteScreen(),
+            ),
+          );
         },
         child: Icon(
           Icons.add,

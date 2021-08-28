@@ -1,4 +1,4 @@
-class Notes{
+class Notes {
   String title;
   String desc;
 

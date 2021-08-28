@@ -34,11 +34,11 @@ class NoteCard extends StatelessWidget {
                 ),
                 Spacer(),
                 IconButton(
-                    onPressed: (){},
-                    icon: Icon(
-                        Icons.delete,
-                      color: Colors.black38,
-                    ),
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.black38,
+                  ),
                 ),
               ],
             ),
