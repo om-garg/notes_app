@@ -28,4 +28,9 @@ class NotesData extends ChangeNotifier {
     _notes.add(note);
     notifyListeners();
   }
+  
+  void deleteNotes(int index) {
+    _notes.remove(_notes[index]);
+    notifyListeners();
+  }
 }

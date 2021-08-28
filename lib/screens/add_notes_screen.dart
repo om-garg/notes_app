@@ -1,39 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/model/notes_data.dart';
+import 'package:provider/provider.dart';
 
 class AddNoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String title = "";
+    String desc = "";
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextField(),
-          Expanded(
-            child: TextField(),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Provider.of<TaskData>(context, listen: false).addTask(newTaskTitle);
-              Navigator.pop(context);
-            },
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 23,
+                fontWeight: FontWeight.w600,
+              ),
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.white,
+              cursorHeight: 27,
+              decoration: InputDecoration(
+                hintText: 'Title of Note',
+                hintStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 23,
+                  fontWeight: FontWeight.w600,
                 ),
-                child: Text(
-                  'Add',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+                  border: InputBorder.none,
+              ),
+              onChanged: (noteTitle) {
+                title = noteTitle;
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: TextField(
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+                keyboardType: TextInputType.text,
+                cursorColor: Colors.white,
+                cursorHeight: 25,
+                maxLines: 22,
+                decoration: InputDecoration(
+                  hintText: 'Description',
+                  hintStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 1.5,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 2.5,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 2,
+                    ),
+                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                ),
+                onChanged: (noteDesc) {
+                  desc = noteDesc;
+                },
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+              ),
+              onPressed: (){
+                print(title);
+                print(desc);
+                Provider.of<NotesData>(context, listen: false).addNotes(title, desc);
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.06,
+                color: Colors.white,
+                child: Center(
+                  child: Text(
+                    'Add',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.lightBlue,
+                      fontSize: 25,
+                    ),
                   ),
                 ),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
       backgroundColor: Colors.lightBlue,
       appBar: AppBar(
