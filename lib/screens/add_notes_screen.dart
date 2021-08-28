@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class AddNoteScreen extends StatelessWidget {
+  const AddNoteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         shadowColor: Colors.transparent,
         title: Text(
-            'Flutter Notes',
+          'Flutter Notes',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -20,16 +20,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () {
-
-        },
-        child: Icon(
-            Icons.add,
-          color: Colors.lightBlue,
-        ),
       ),
     );
   }
