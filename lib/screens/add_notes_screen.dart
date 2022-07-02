@@ -1,12 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/model/notes_data.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
-class AddNoteScreen extends StatelessWidget {
+import '../model/notes.dart';
+
+class AddNoteScreen extends StatefulWidget {
+  final bool isUpdate;
+  final Notes? note;
+  AddNoteScreen({
+    this.note,
+    required this.isUpdate,
+  });
+  @override
+  State<AddNoteScreen> createState() => _AddNoteScreenState();
+}
+
+class _AddNoteScreenState extends State<AddNoteScreen> {
+  TextEditingController title = TextEditingController();
+  TextEditingController content = TextEditingController();
+
+  FocusNode noteFocus = FocusNode();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(widget.isUpdate) {
+      title.text = widget.note!.title;
+    content.text = widget.note!.content;
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    title.dispose();
+    content.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    String titleText = '';
-    String descText = '';
+
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -14,6 +51,12 @@ class AddNoteScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
+              onSubmitted: (val) {
+                if(val != " "){
+                  noteFocus.requestFocus();
+                }
+              },
+              controller: title,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 23,
@@ -22,6 +65,7 @@ class AddNoteScreen extends StatelessWidget {
               keyboardType: TextInputType.text,
               cursorColor: Colors.white,
               cursorHeight: 27,
+
               decoration: InputDecoration(
                 hintText: 'Title of Note',
                 hintStyle: TextStyle(
@@ -31,15 +75,14 @@ class AddNoteScreen extends StatelessWidget {
                 ),
                   border: InputBorder.none,
               ),
-              onChanged: (value) {
-                titleText = value;
-              },
             ),
             SizedBox(
               height: 10,
             ),
             Expanded(
               child: TextField(
+                focusNode: noteFocus,
+                controller: content,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -78,9 +121,6 @@ class AddNoteScreen extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
                 ),
-                onChanged: (value) {
-                  descText = value;
-                },
               ),
             ),
             SizedBox(
@@ -91,11 +131,30 @@ class AddNoteScreen extends StatelessWidget {
                 primary: Colors.white,
               ),
               onPressed: () {
-                print(titleText);
-                print(descText);
-                Provider.of<NotesData>(context, listen: false)
-                    .addNotes(titleText, descText);
-                Navigator.pop(context);
+                if(widget.isUpdate) {
+                  Notes note = new Notes(
+                    id: widget.note!.id,
+                    userid: widget.note!.userid,
+                    title: title.text,
+                    content: content.text,
+                    dateAdded: widget.note!.dateAdded,
+                  );
+                  Provider.of<NotesData>(context, listen: false)
+                      .updateNotes(note);
+                  Navigator.pop(context);
+                } else {
+                  Notes note = new Notes(
+                    id: Uuid().v1(),
+                    userid: "gargom52@gmail.com",
+                    title: title.text,
+                    content: content.text,
+                    dateAdded: DateTime.now(),
+                  );
+                  print(note.id);
+                  Provider.of<NotesData>(context, listen: false)
+                      .addNotes(note);
+                  Navigator.pop(context);
+                }
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -103,7 +162,7 @@ class AddNoteScreen extends StatelessWidget {
                 color: Colors.white,
                 child: Center(
                   child: Text(
-                    'Add',
+                    widget.isUpdate ? "Edit" :'Add',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.lightBlue,

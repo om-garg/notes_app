@@ -1,16 +1,15 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:notes_app/repository/notes.dart';
 import 'notes.dart';
 
 class NotesData extends ChangeNotifier {
-  List<Notes> _notes = [
-    Notes(
-      title: 'First Note',
-      desc:
-          "here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on t",
-    ),
-  ];
+  List<Notes> _notes = [];
+
+  NotesData(){
+    fetchNotes();
+  }
 
   UnmodifiableListView<Notes> get note {
     return UnmodifiableListView(_notes);
@@ -20,17 +19,35 @@ class NotesData extends ChangeNotifier {
     return _notes.length;
   }
 
-  void addNotes(String title, String desc) {
+  void addNotes(Notes notes) {
     final note = Notes(
-      title: title,
-      desc: desc,
+      title: notes.title,
+      content: notes.content,
+      id: notes.id,
+      userid: notes.userid,
+      dateAdded: notes.dateAdded
     );
     _notes.add(note);
     notifyListeners();
+    NotesRepository.addNote(note);
+  }
+
+  void updateNotes(Notes note) {
+    int indexOfNote = _notes.indexOf(_notes.firstWhere((element) => element.id == note.id));
+    _notes[indexOfNote] = note;
+    notifyListeners();
+    NotesRepository.updateNote (note);
   }
   
   void deleteNotes(int index) {
+    String id = _notes[index].id;
     _notes.remove(_notes[index]);
+    notifyListeners();
+    NotesRepository.deleteNote(id);
+  }
+
+  void fetchNotes() async {
+    _notes = await NotesRepository.fetchNotes();
     notifyListeners();
   }
 }
