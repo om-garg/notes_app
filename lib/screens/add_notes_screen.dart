@@ -137,7 +137,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     userid: widget.note!.userid,
                     title: title.text,
                     content: content.text,
-                    dateAdded: widget.note!.dateAdded,
+                    dateAdded: DateTime.now(),
                   );
                   Provider.of<NotesData>(context, listen: false)
                       .updateNotes(note);
