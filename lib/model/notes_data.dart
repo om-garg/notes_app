@@ -35,6 +35,10 @@ class NotesData extends ChangeNotifier {
         .toList();
   }
 
+  void sortNotes(){
+    _notes.sort((a, b) => a.dateAdded!.compareTo(b.dateAdded!));
+  }
+
   void addNotes(Notes notes) {
     final note = Notes(
         title: notes.title,
@@ -43,6 +47,7 @@ class NotesData extends ChangeNotifier {
         userid: notes.userid,
         dateAdded: notes.dateAdded);
     _notes.add(note);
+    sortNotes();
     notifyListeners();
     NotesRepository.addNote(note);
   }
