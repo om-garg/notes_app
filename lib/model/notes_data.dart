@@ -36,7 +36,7 @@ class NotesData extends ChangeNotifier {
   }
 
   void sortNotes(){
-    _notes.sort((a, b) => a.dateAdded!.compareTo(b.dateAdded!));
+    _notes.sort((a, b) => b.dateAdded!.compareTo(a.dateAdded!));
   }
 
   void addNotes(Notes notes) {
@@ -70,6 +70,7 @@ class NotesData extends ChangeNotifier {
 
   void fetchNotes() async {
     _notes = await NotesRepository.fetchNotes();
+    sortNotes();
     notifyListeners();
   }
 }
