@@ -56,6 +56,7 @@ class NotesData extends ChangeNotifier {
     int indexOfNote =
         _notes.indexOf(_notes.firstWhere((element) => element.id == note.id));
     _notes[indexOfNote] = note;
+    sortNotes();
     notifyListeners();
     NotesRepository.updateNote(note);
   }
