@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/home_screen.dart';
 import 'package:notes_app/screens/login_screen.dart';
+import 'package:notes_app/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'model/provider/auth_provider.dart';
 import 'model/provider/notes_provider.dart';
+
+final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
 void main() {
   runApp(MyApp());
@@ -24,7 +26,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.lightBlue,
         ),
         // home: HomeScreen(),
-        home: LoginScreen(),
+        navigatorKey: navigationKey,
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );

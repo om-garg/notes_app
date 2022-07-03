@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:notes_app/core/local_storage.dart';
 import 'package:notes_app/model/provider/auth_provider.dart';
@@ -27,11 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
     String? email = await localStorage.getEmail();
     String? password = await localStorage.getPassword();
 
+    log(email.toString(), name: "Splash screen Email");
+
     if(email == null && password == null) {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
     } else {
-      String? token = await localStorage.getJwt();
-      bool status = await context.read<AuthProvider>().signIn(email!, password!, token!);
+      bool status = await context.read<AuthProvider>().signIn(email!, password!);
       if(status){
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
       }

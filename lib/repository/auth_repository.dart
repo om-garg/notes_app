@@ -6,12 +6,14 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../core/local_storage.dart';
+
 class AuthRepository{
   static final String url = "https://secure-sierra-64918.herokuapp.com";
 
   static Future<bool> signUp(String email, String password, String confirmPassword) async {
     try{
-      Response response = await http.post(Uri.parse(url + "signup"), body:{
+      Response response = await http.post(Uri.parse(url + "/signup"), body:{
         "email": email,
         "password": password,
         "confirmPassword": confirmPassword
@@ -19,6 +21,10 @@ class AuthRepository{
       var decoded = jsonDecode(response.body);
       log(decoded.toString(), name: "signUp Method");
       if(decoded["statusCode"] == 201) {
+        LocalStorage localStorage = LocalStorage();
+        localStorage.setEmail(email);
+        localStorage.setPassword(password);
+        localStorage.setJwt(decoded["token"]);
         return true;
       } else {
         return false;
@@ -30,8 +36,9 @@ class AuthRepository{
     }
   }
 
-  static Future<bool> signIn(String email, String password, String token) async {
+  static Future<bool> signIn(String email, String password) async {
     try{
+      String? token = await LocalStorage().getJwt();
       Response response = await http.post(Uri.parse(url + "/signin"), body:{
         "email": email,
         "password": password,
