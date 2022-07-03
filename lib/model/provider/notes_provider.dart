@@ -8,6 +8,9 @@ class NotesProvider extends ChangeNotifier {
   List<Notes> _notes = [];
 
   String _searchQuery = '';
+  String _userid = '';
+
+  String get userid => _userid;
 
   String get searchQuery => _searchQuery;
 
@@ -21,6 +24,11 @@ class NotesProvider extends ChangeNotifier {
 
   int get notesCount {
     return _notes.length;
+  }
+
+  void setUserId(String val){
+    _userid = val;
+    notifyListeners();
   }
 
   void setSearchQuery(String val) {
@@ -69,7 +77,8 @@ class NotesProvider extends ChangeNotifier {
   }
 
   void fetchNotes() async {
-    _notes = await NotesRepository.fetchNotes();
+    _notes.clear();
+    _notes = await NotesRepository.fetchNotes(_userid);
     sortNotes();
     notifyListeners();
   }

@@ -27,8 +27,8 @@ class NotesRepository {
     log(decoded.toString());
   }
 
-  static Future<List<Notes>> fetchNotes() async {
-    Response response = await http.get(Uri.parse(url));
+  static Future<List<Notes>> fetchNotes(String userId) async {
+    Response response = await http.get(Uri.parse(url + "/$userId"));
     var decoded = jsonDecode(response.body);
     log(decoded.toString());
 

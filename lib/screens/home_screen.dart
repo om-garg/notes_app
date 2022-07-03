@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/model/provider/auth_provider.dart';
 import 'package:notes_app/screens/add_notes_screen.dart';
 import 'package:notes_app/widgets/notes_list.dart';
+import 'package:provider/provider.dart';
+
+import 'login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -21,6 +25,18 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.read<AuthProvider>().signOut();
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,

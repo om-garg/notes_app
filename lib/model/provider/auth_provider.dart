@@ -3,11 +3,18 @@ import 'package:notes_app/repository/auth_repository.dart';
 
 class AuthProvider extends ChangeNotifier{
   bool _isSignUp = false;
+  bool _isLoading = false;
 
   bool get isSignUp => _isSignUp;
+  bool get isLoading => _isLoading;
 
   void toggle(){
     _isSignUp = !_isSignUp;
+    notifyListeners();
+  }
+
+  void setIsLoading(){
+    _isLoading = !_isLoading;
     notifyListeners();
   }
 

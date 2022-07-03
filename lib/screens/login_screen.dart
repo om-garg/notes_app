@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/core/local_storage.dart';
 import 'package:notes_app/core/messenger.dart';
+import 'package:notes_app/model/provider/notes_provider.dart';
 import 'package:notes_app/widgets/custom_button.dart';
 import 'package:notes_app/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';
@@ -81,11 +83,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50,
                 ),
               CustomButton(
+                isLoading: value.isLoading,
                 text: value.isSignUp ? "Sign Up" : "Sign In",
                 onPress: () async {
+                  value.setIsLoading();
                   if(value.isSignUp){
                     bool status =  await value.signUp(emailController.text, passwordController.text, confirmPasswordController.text);
                     if(status) {
+                      LocalStorage().setEmail(emailController.text);
+                      context.read<NotesProvider>().setUserId((await LocalStorage().getEmail())!);
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
                     } else {
                       Messenger.showSnackbar("Error!!!");
@@ -93,11 +99,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   } else {
                     bool status =  await value.signIn(emailController.text, passwordController.text);
                     if(status) {
+                      LocalStorage().setEmail(emailController.text);
+                      context.read<NotesProvider>().setUserId((await LocalStorage().getEmail())!);
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
                     } else {
                       Messenger.showSnackbar("Error!!!");
                     }
                   }
+                  value.setIsLoading();
                 },
               ),
                 TextButton(

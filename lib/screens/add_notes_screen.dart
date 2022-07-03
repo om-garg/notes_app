@@ -4,6 +4,7 @@ import 'package:notes_app/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../core/local_storage.dart';
 import '../model/notes.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -125,33 +126,36 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             SizedBox(
               height: 20,
             ),
-            CustomButton(
-              text: widget.isUpdate ? "Edit" : 'Add',
-              onPress: () {
-                if (widget.isUpdate) {
-                  Notes note = new Notes(
-                    id: widget.note!.id,
-                    userid: widget.note!.userid,
-                    title: title.text,
-                    content: content.text,
-                    dateAdded: DateTime.now(),
-                  );
-                  Provider.of<NotesProvider>(context, listen: false)
-                      .updateNotes(note);
-                  Navigator.pop(context);
-                } else {
-                  Notes note = new Notes(
-                    id: Uuid().v1(),
-                    userid: "gargom52@gmail.com",
-                    title: title.text,
-                    content: content.text,
-                    dateAdded: DateTime.now(),
-                  );
-                  print(note.id);
-                  Provider.of<NotesProvider>(context, listen: false).addNotes(note);
-                  Navigator.pop(context);
-                }
-              },
+            Consumer<NotesProvider>(
+              builder: (context, value, _) {
+                return CustomButton(
+                  text: widget.isUpdate ? "Edit" : 'Add',
+                  onPress: () async {
+                    if (widget.isUpdate) {
+                      Notes note = new Notes(
+                        id: widget.note!.id,
+                        userid: widget.note!.userid,
+                        title: title.text,
+                        content: content.text,
+                        dateAdded: DateTime.now(),
+                      );
+                      value.updateNotes(note);
+                      Navigator.pop(context);
+                    } else {
+                      Notes note = new Notes(
+                        id: Uuid().v1(),
+                        userid: value.userid,
+                        title: title.text,
+                        content: content.text,
+                        dateAdded: DateTime.now(),
+                      );
+                      print(note.id);
+                      value.addNotes(note);
+                      Navigator.pop(context);
+                    }
+                  },
+                );
+              }
             )
           ],
         ),

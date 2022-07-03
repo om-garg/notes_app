@@ -47,6 +47,9 @@ class AuthRepository{
       var decoded = jsonDecode(response.body);
       log(decoded.toString());
       if(decoded["statusCode"] == 200) {
+        LocalStorage localStorage = LocalStorage();
+        localStorage.setEmail(email);
+        localStorage.setPassword(password);
         return true;
       } else {
         return false;

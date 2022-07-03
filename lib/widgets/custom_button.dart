@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
+  final bool isLoading;
   const CustomButton({
     Key? key,
     required this.text,
-    required this.onPress
+    required this.onPress,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,9 @@ class CustomButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.08,
         child: Center(
-          child: Text(
+          child: isLoading ? CircularProgressIndicator(
+            color: Colors.lightBlue,
+          ) :Text(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
