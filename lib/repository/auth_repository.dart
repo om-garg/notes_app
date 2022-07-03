@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/local_storage.dart';
+import '../core/messenger.dart';
 
 class AuthRepository{
   static final String url = "https://secure-sierra-64918.herokuapp.com";
@@ -27,6 +28,7 @@ class AuthRepository{
         localStorage.setJwt(decoded["token"]);
         return true;
       } else {
+        Messenger.showSnackbar(decoded["message"]);
         return false;
       }
     } catch(e, s) {
@@ -52,6 +54,7 @@ class AuthRepository{
         localStorage.setPassword(password);
         return true;
       } else {
+        Messenger.showSnackbar(decoded["message"]);
         return false;
       }
     } catch(e, s) {

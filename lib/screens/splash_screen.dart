@@ -30,9 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
     String? email = await localStorage.getEmail();
     String? password = await localStorage.getPassword();
 
-    log(email.toString(), name: "Splash screen Email");
-    log(password.toString(), name: "Splash screen Password");
-
     if(email == null && password == null) {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
     } else {

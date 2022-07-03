@@ -93,8 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       LocalStorage().setEmail(emailController.text);
                       context.read<NotesProvider>().setUserId((await LocalStorage().getEmail())!);
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
-                    } else {
-                      Messenger.showSnackbar("Error!!!");
                     }
                   } else {
                     bool status =  await value.signIn(emailController.text, passwordController.text);
@@ -102,8 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       LocalStorage().setEmail(emailController.text);
                       context.read<NotesProvider>().setUserId((await LocalStorage().getEmail())!);
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
-                    } else {
-                      Messenger.showSnackbar("Error!!!");
                     }
                   }
                   value.setIsLoading();
