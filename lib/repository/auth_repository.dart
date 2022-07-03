@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:http/http.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository{
   static final String url = "https://secure-sierra-64918.herokuapp.com";
@@ -25,5 +26,11 @@ class AuthRepository{
     });
     var decoded = jsonDecode(response.body);
     log(decoded.toString());
+  }
+
+  static Future<void> signOut() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove("email");
+    pref.remove("password");
   }
 }
