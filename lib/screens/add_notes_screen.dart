@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/model/notes_data.dart';
+import 'package:notes_app/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -27,9 +28,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     // TODO: implement initState
     super.initState();
 
-    if(widget.isUpdate) {
+    if (widget.isUpdate) {
       title.text = widget.note!.title;
-    content.text = widget.note!.content;
+      content.text = widget.note!.content;
     }
   }
 
@@ -40,10 +41,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     content.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -52,7 +52,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           children: [
             TextField(
               onSubmitted: (val) {
-                if(val != " "){
+                if (val != " ") {
                   noteFocus.requestFocus();
                 }
               },
@@ -65,7 +65,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               keyboardType: TextInputType.text,
               cursorColor: Colors.white,
               cursorHeight: 27,
-
               decoration: InputDecoration(
                 hintText: 'Title of Note',
                 hintStyle: TextStyle(
@@ -73,7 +72,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   fontSize: 23,
                   fontWeight: FontWeight.w600,
                 ),
-                  border: InputBorder.none,
+                border: InputBorder.none,
               ),
             ),
             SizedBox(
@@ -118,20 +117,18 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                       color: Colors.white,
                       width: 2,
                     ),
-                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-              ),
-              onPressed: () {
-                if(widget.isUpdate) {
+            CustomButton(
+              text: widget.isUpdate ? "Edit" : 'Add',
+              onPress: () {
+                if (widget.isUpdate) {
                   Notes note = new Notes(
                     id: widget.note!.id,
                     userid: widget.note!.userid,
@@ -151,27 +148,11 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     dateAdded: DateTime.now(),
                   );
                   print(note.id);
-                  Provider.of<NotesData>(context, listen: false)
-                      .addNotes(note);
+                  Provider.of<NotesData>(context, listen: false).addNotes(note);
                   Navigator.pop(context);
                 }
               },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.06,
-                color: Colors.white,
-                child: Center(
-                  child: Text(
-                    widget.isUpdate ? "Edit" :'Add',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.lightBlue,
-                      fontSize: 25,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            )
           ],
         ),
       ),

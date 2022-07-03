@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home_screen.dart';
+import 'package:notes_app/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'model/notes_data.dart';
 
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
         ),
-        home: HomeScreen(),
+        // home: HomeScreen(),
+        home: LoginScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
