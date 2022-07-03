@@ -1,17 +1,17 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:notes_app/repository/notes.dart';
-import 'notes.dart';
+import 'package:notes_app/repository/notes_repository.dart';
+import '../notes.dart';
 
-class NotesData extends ChangeNotifier {
+class NotesProvider extends ChangeNotifier {
   List<Notes> _notes = [];
 
   String _searchQuery = '';
 
   String get searchQuery => _searchQuery;
 
-  NotesData() {
+  NotesProvider() {
     fetchNotes();
   }
 

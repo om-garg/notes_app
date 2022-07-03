@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/model/notes_data.dart';
+import 'package:notes_app/model/provider/notes_provider.dart';
 import 'package:notes_app/screens/add_notes_screen.dart';
 import 'package:notes_app/widgets/note_card.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +9,7 @@ import '../model/notes.dart';
 class NotesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<NotesData>(builder: (context, data, child) {
+    return Consumer<NotesProvider>(builder: (context, data, child) {
       return ListView(
         children: [
           Padding(

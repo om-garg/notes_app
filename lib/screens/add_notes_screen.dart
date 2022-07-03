@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/model/notes_data.dart';
+import 'package:notes_app/model/provider/notes_provider.dart';
 import 'package:notes_app/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -136,7 +136,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     content: content.text,
                     dateAdded: DateTime.now(),
                   );
-                  Provider.of<NotesData>(context, listen: false)
+                  Provider.of<NotesProvider>(context, listen: false)
                       .updateNotes(note);
                   Navigator.pop(context);
                 } else {
@@ -148,7 +148,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     dateAdded: DateTime.now(),
                   );
                   print(note.id);
-                  Provider.of<NotesData>(context, listen: false).addNotes(note);
+                  Provider.of<NotesProvider>(context, listen: false).addNotes(note);
                   Navigator.pop(context);
                 }
               },
