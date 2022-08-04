@@ -31,6 +31,16 @@ class LocalStorage {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString("token");
   }
+
+  Future<void> removeEmail() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove("email");
+  }
+
+  Future<void> removePassword() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove("password");
+  }
 }
 
 

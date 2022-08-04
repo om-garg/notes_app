@@ -28,7 +28,7 @@ class AuthRepository{
         localStorage.setJwt(decoded["token"]);
         return true;
       } else {
-        Messenger.showSnackbar(decoded["message"]);
+        Messenger.showSnackbar(decoded["message"] ?? "User already exist");
         return false;
       }
     } catch(e, s) {
@@ -65,8 +65,8 @@ class AuthRepository{
   }
 
   static Future<void> signOut() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.remove("email");
-    pref.remove("password");
+    LocalStorage storage = LocalStorage();
+    storage.removeEmail();
+    storage.removePassword();
   }
 }

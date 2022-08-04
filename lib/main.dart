@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/login_screen.dart';
-import 'package:notes_app/screens/splash_screen.dart';
+import 'package:notes_app/provider/auth_provider.dart';
+import 'package:notes_app/provider/notes_provider.dart';
+import 'package:notes_app/ui/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'model/provider/auth_provider.dart';
-import 'model/provider/notes_provider.dart';
 
 final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
